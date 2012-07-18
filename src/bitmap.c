@@ -2103,6 +2103,8 @@ GdipBitmapUnlockBits (GpBitmap *bitmap, BitmapData *locked_data)
 	return status;
 }
 
+#include<stdio.h>
+
 GpStatus
 GdipBitmapSetPixel (GpBitmap *bitmap, int x, int y, ARGB color)
 {
@@ -2131,7 +2133,10 @@ GdipBitmapSetPixel (GpBitmap *bitmap, int x, int y, ARGB color)
 	case PixelFormat32bppARGB:
 	case PixelFormat32bppPARGB: {
 		ARGB *scan = (ARGB *)v;
-		scan[x] = color;
+		if(color & 0xFF000000)
+			scan[x] = color;
+		else
+			scan[x] = 0;
 		break;
 	}
 	case PixelFormat16bppGrayScale:
